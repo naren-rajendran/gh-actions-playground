@@ -10,13 +10,14 @@ RUN pip3 install redis===3.5.3 requests==2.27.1 && \
 
 USER ${USER}
 WORKDIR ${HOME_DIR}/s3
-RUN ln -sf /scality-kms node_modules && \
-    rm -f ~/.gitconfig && \
+RUN rm -f ~/.gitconfig && \
     git config --global --add safe.directory . && \
     git lfs install && \
     GIT_LFS_SKIP_SMUDGE=1 && \
     yarn install --frozen-lockfile --production --network-concurrency 1 && \
     yarn cache clean --all
+
+RUN ln -sf /scality-kms node_modules
 
 EXPOSE 8000
 
